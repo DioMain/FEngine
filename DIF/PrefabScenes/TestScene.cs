@@ -6,20 +6,26 @@ namespace Engine.PrefabScenes
 {
     public class TestScene : Scene
     {
-        public TestScene() : base() { Name = "TEST SCENE"; }
+        public TestScene() : base() { Name = "TEST SCENE"; BackgroundColor = new Color(100, 100, 100); }
 
-        public AppObject rect0;
-        public AppObject rect1;
+        private AppObject obj0;
+        private AppObject obj1;
+        private AppObject obj2;
 
         public override void Start()
         {
-            rect0 = SceneManager.CreateObject(new Vector2f(-50, -50));
 
-            rect0.AddComponent<TestRectshape>();
+            obj0 = SceneManager.CreateObject();
 
-            rect1 = SceneManager.CreateObject(new Vector2f(150, 150));
+            obj0.AddComponent<BoxRenderer>();
 
-            rect1.AddComponent<TestRectshape>();
+            obj1 = SceneManager.CreateObject(new Vector2f(100, 100), obj0);
+
+            obj1.GetComponent<BoxRenderer>().Color = Color.Red;
+
+            obj2 = SceneManager.CreateObject(new Vector2f(-300, 150));
+
+            obj2.AddComponent<CircleRenderer>();
 
             base.Start();
         }
@@ -52,17 +58,11 @@ namespace Engine.PrefabScenes
                 SceneManager.MainCamera.MainObject.transform.Position =
                     new Vector2f(SceneManager.MainCamera.MainObject.transform.Position.X, SceneManager.MainCamera.MainObject.transform.Position.Y - 50);
 
-            if (InputManager.GetKeyDown(Keyboard.Key.D))
-                rect0.transform.Position = new Vector2f(rect0.transform.Position.X + 50, rect0.transform.Position.Y);
+            if (InputManager.GetKeyDown(Keyboard.Key.Hyphen))
+                SceneManager.MainCamera.Size -= 0.1f;
 
-            if (InputManager.GetKeyDown(Keyboard.Key.A))
-                rect0.transform.Position = new Vector2f(rect0.transform.Position.X - 50, rect0.transform.Position.Y);
-
-            if (InputManager.GetKeyDown(Keyboard.Key.W))
-                rect0.transform.Position = new Vector2f(rect0.transform.Position.X, rect0.transform.Position.Y + 50);
-
-            if (InputManager.GetKeyDown(Keyboard.Key.S))
-                rect0.transform.Position = new Vector2f(rect0.transform.Position.X, rect0.transform.Position.Y - 50);
+            if (InputManager.GetKeyDown(Keyboard.Key.Add))
+                SceneManager.MainCamera.Size += 0.1f;
         }
 
         public override void DrawUpdate()

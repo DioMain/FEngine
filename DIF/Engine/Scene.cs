@@ -6,6 +6,8 @@ namespace Engine
     {
         public string Name { get; set; }
 
+        public Color BackgroundColor { get; set; }
+
         public AppObject MainCameraObject { get => AppObjects[0]; }
 
         public List<AppObject> AppObjects;
@@ -13,6 +15,8 @@ namespace Engine
         public Scene()
         {
             AppObjects = new List<AppObject>();
+
+            BackgroundColor = Color.Black;
 
             Name = "NONAME_SCENE";
 
@@ -28,6 +32,7 @@ namespace Engine
             };
 
             obj.AddComponent<Camera>();
+            obj.AddComponent<SceneBackground>();
 
             AppObjects.Add(obj);
         }

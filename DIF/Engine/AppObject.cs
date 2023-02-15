@@ -186,12 +186,14 @@ namespace Engine
         {
             AppObject copy = new AppObject(Name)
             {
-                Tag = Tag
+                Tag = Tag,
+                Components = new List<ObjectBehavior>()
             };
 
             for (int i = 0; i < Components.Count; i++)
             {
-                copy.AddComponent((ObjectBehavior)Components[i].Clone());
+                copy.Components.Add((ObjectBehavior)Components[i].Clone());
+                copy.Components[i].MainObject = copy;
             }
 
             return copy;
